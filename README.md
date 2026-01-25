@@ -1,30 +1,25 @@
-# HoboFrancs-CTA
-Device-embedded CTA for creators & inventors (Beta)
-A Certificate-Triggered Attribution (CTA) system designed to embed creator proof, ownership, and monetization signals directly into device certificates.
-# HoboFrancs CTA (Beta)
+# HoboFrancs Vision
 
-HoboFrancs is a creator-first Certificate-Triggered Attribution (CTA) system.
-It provides instant proof-of-creation, attribution, and monetization signals
-embedded at install or registration time — without lawyers, gatekeepers,
-or platform dependency.
+HoboFrancs is architected to become a
+Creator Root Certificate Authority (CRCA).
 
-## What this is
-- Proof-of-existence for creative works & inventions
-- Device-level certificate metadata (CTA)
-- Timestamped + hashed creator claims
-- Built for phones, laptops, and future OEM integration
+Our long-term vision is to embed creator attribution,
+proof-of-existence, and ownership signals at the lowest
+trust layer of digital systems — the certificate layer.
 
-## Who it’s for
-- Artists
-- Independent creators
-- Inventors
-- Developers
-- Writers & designers
+## Today
+- User-generated certificates
+- Device-bound proof-of-creation
+- Cryptographic timestamps
+- Voluntary verification
 
-## Status
-🧪 Beta / Proof-of-Concept
+## Tomorrow
+- Platform-recognized certificates
+- Installer-level attribution
+- OEM integrations
+- Root trust delegation for creators
 
-## Vision
-Make attribution native.
-Make ownership automatic.
-Make creators undeniable.
+## End State
+Creation itself becomes a trust event.
+Attribution becomes native.
+Ownership becomes automatic.
