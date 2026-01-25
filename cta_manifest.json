@@ -1,0 +1,25 @@
+{
+  "system": "HoboFrancs CTA",
+  "version": "0.1-beta",
+  "creator_id": "AUTO-GENERATED",
+  "timestamp_utc": "AUTO",
+  "device_fingerprint": "HASHED",
+  "work_type": [
+    "art",
+    "music",
+    "writing",
+    "software",
+    "design",
+    "invention"
+  ],
+  "proof": {
+    "hash_algorithm": "SHA-256",
+    "certificate_type": "CTA-Embedded",
+    "storage": "local + optional cloud"
+  },
+  "monetization": {
+    "tier": "$5 Basic Proof",
+    "upgrade_available": true
+  },
+  "legal_note": "This system provides proof-of-existence and attribution. It does not replace government patent or copyright filings."
+}
