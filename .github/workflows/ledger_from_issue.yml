@@ -1,0 +1,87 @@
+name: Append Stamp to Public Ledger
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  append:
+    if: contains(github.event.issue.labels.*.name, 'hobo-stamp')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Append to ledger.json
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = context.payload.issue.body || '';
+            let cert;
+            try { cert = JSON.parse(body); }
+            catch (e) { core.setFailed("Issue body is not valid JSON. Paste ONLY the HOBO_ENTRY JSON."); return; }
+
+            const required = ["type","principle","file","file_hash","timestamp"];
+            for (const k of required) {
+              if (!cert[k]) { core.setFailed(`Missing required field: ${k}`); return; }
+            }
+            if (cert.type !== "HOBO_ENTRY") { core.setFailed("type must be HOBO_ENTRY"); return; }
+            if (cert.principle !== "First created. First recorded.") {
+              core.setFailed("principle must be exactly: First created. First recorded.");
+              return;
+            }
+
+            const ledgerPath = "verify/ledger.json";
+            const ledger = JSON.parse(fs.readFileSync(ledgerPath, "utf8"));
+            const recordedAt = context.payload.issue.created_at;
+
+            const entry = {
+              ledger_id: context.payload.issue.number,
+              recorded_at: recordedAt,
+              source: { type: "github_issue", issue_number: context.payload.issue.number },
+              cert: {
+                type: cert.type,
+                principle: cert.principle,
+                file: cert.file,
+                file_hash: cert.file_hash,
+                timestamp: cert.timestamp,
+                tier: cert.tier || "HOBO",
+                git_commit: cert.git_commit || null,
+                network: cert.network || "local",
+                verification: cert.verification || null,
+                disclaimer: cert.disclaimer || null
+              }
+            };
+
+            const exists = ledger.records.some(r => r.cert.file_hash === entry.cert.file_hash);
+            if (exists) { core.setFailed("This file_hash already exists in the public ledger."); return; }
+
+            ledger.records.push(entry);
+            ledger.records.sort((a,b) => (a.recorded_at < b.recorded_at ? -1 : a.recorded_at > b.recorded_at ? 1 : (a.ledger_id - b.ledger_id)));
+            fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2));
+
+      - name: Commit ledger update
+        run: |
+          git config user.name "hobo-ledger-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add verify/ledger.json
+          git commit -m "ledger: append stamp from issue #${{ github.event.issue.number }}" || exit 0
+          git push
+
+      - name: Comment confirmation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const msg = `✅ Added to public ledger.\n\nCore principle: **First created. First recorded.**\n\nYour ledger ID: **#${issue.number}**`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: msg
+            });

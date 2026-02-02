@@ -1,0 +1,25 @@
+{
+  "schema": "hobofrancs.hobo_entry.v1",
+  "type": "HOBO_ENTRY",
+  "principle": "First created. First recorded.",
+  "file": "test.txt",
+  "file_hash": "f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2",
+  "timestamp": "2026-02-02T01:58:04Z",
+  "tier": "HOBO",
+  "origin": {
+    "platform": "linux",
+    "app": "hobo-cli",
+    "device_binding": "optional-nonpii"
+  },
+  "verification": {
+    "method": "sha256_hash_match",
+    "voluntary": true,
+    "verify_url": "https://YOUR_GH_PAGES/verify/"
+  },
+  "disclaimer": {
+    "non_authoritative": true,
+    "no_ownership_claim": true,
+    "no_legal_enforcement": true
+  },
+  "network": "local"
+}
