@@ -1,17 +1,15 @@
-# HoboFrancs OneDrop
+# HoboFrancs — GitHub-Ready Package (v2)
 
-**First created. First recorded.**
+**Core Principle:** **First created. First recorded.**
 
-This drop contains a working:
-- `hobo` CLI (stamp/commit/verify/publish + flags + private + sealed)
-- GitHub Pages verifier (`/verify/`)
-- Public ledger (`/verify/ledger.json`)
-- Issue template + GitHub Action to append stamps to ledger
+Includes: Hobo CLI, Windows installer scripts, Android APK skeleton, and optional root-certificate placeholders.
 
-## Quick start
+## CLI Usage
 ```bash
-python -m hobo stamp my_work.png
-python -m hobo publish my_work.png --repo OWNER/REPO --token YOUR_TOKEN
-python -m hobo publish my_work.png --private --sealed --passphrase "StrongPass"
-python -m hobo verify --sealed certificates/my_work.hobo.json.sealed --file my_work.png --passphrase "StrongPass"
+python -m hobo init
+python -m hobo commit <file>
+python -m hobo verify <file>
 ```
+
+## Token (Optional)
+Set `HFR_TOKEN_BALANCE` (positive integer) to enable priority commits.
